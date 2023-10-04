@@ -71,7 +71,7 @@ class EmpleadoView:
             name=input ("Nombre empleado: ")
             salary=int(input("Salario empleado: "))
             birthDate=input("Fecha nacimiento (aaaa-mm-dd): ")
-            self.company.insertEmploye(name,salary,birthDate,idCompany)
+            self.empleado.insertEmploye(name,salary,birthDate,idCompany)
             
     def quit(self):
         print("Cerrando opciones.")
