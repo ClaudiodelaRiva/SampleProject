@@ -10,7 +10,7 @@ class EmpleadoView:
     '''
      
     def __init__ (self):
-        self.company = EmpleadoModel () #Crea un objeto model que se invocará desde esta vista
+        self.empleado = EmpleadoModel () #Crea un objeto model que se invocará desde esta vista
         #Crea un diccionario con las opciones (key) y los métodos/acciones que se pueden realizar en este objeto (values)
         self.choices = { "1": self.showEmployees,
                          "2": self.showAvgSalary,
@@ -40,28 +40,29 @@ class EmpleadoView:
     #Vista para la HU Listar los empleados de una compañia
     def showEmployees (self):
         nameCompany = input ("Introducir nombre de compañia: ")
-        idCompany = self.company.getIdCompany(nameCompany)
+        #Invocación al modelo para obtener el id de la compañia
+        idCompany = self.empleado.getIdCompany(nameCompany)
         if idCompany==None:
             print ("No existe la compañia", nameCompany)
         else:
             #Invoca al objeto model para obtener la lista de empleados
-            res1 = self.company.getAllEmployees(nameCompany)
+            res1 = self.empleado.getAllEmployees(nameCompany)
             #Imprime los resultados  
             self.printResults(res1)
             #Idem para obtener el resumen 
-            res2 = self.company.getSummaryEmployees(nameCompany)
+            res2 = self.empleado.getSummaryEmployees(nameCompany)
             for d in res2:
                 print (d)
     
     #Vista para la HU Mostrar salario medio por compañia.
     def showAvgSalary (self):
-        res = self.company.getAvgSalary()
+        res = self.empleado.getAvgSalary()
         self.printResults(res)
     
     #Vista para la HU Insertar un empleado en una compañia
     def newEmployee (self):
         nameCompany = input ("Introducir nombre de compañia para el empleado: ")
-        idCompany = self.company.getIdCompany(nameCompany)
+        idCompany = self.empleado.getIdCompany(nameCompany)
         if idCompany==None:
             print ("No existe la compañia", nameCompany)
         else:
