@@ -1,5 +1,5 @@
 
-from src.company.companyView import CompanyView
+from src.empleados.empleadoView import EmpleadoView
 from src.util.database import DataBase
 
 '''
@@ -15,4 +15,4 @@ db = DataBase(DBNAME) #Conexión a la base de datos DBNAME, si no existe la crea
 db.executeScript(SCHEMA) #Genera el esquema ejecutando el script SCHEMA
 db.executeScript(DATA) #Carga incial de datos especificada en el script DATA
 
-CompanyView().run() #Muestra menú para ejecutar la aplicación
+EmpleadoView().run() #Muestra menú para ejecutar la aplicación

@@ -1,6 +1,6 @@
 from src.util.database import DataBase
 
-class CompanyModel:
+class EmpleadoModel:
     '''
     Clase que representa los objetos de negocio (model) relativos a las funcionalidades de 
     la compañia. Varios métodos de esta clase se invocarán desde la vista, y los resultados

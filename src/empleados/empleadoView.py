@@ -1,16 +1,16 @@
 
 import sys
-from src.company.companyModel import CompanyModel
+from src.empleados.empleadoModel import EmpleadoModel
 
-class CompanyView:
+class EmpleadoView:
     '''
     Clase que representa la vista (entrada y salida) de datos
     para las funcionalidades relativas a una compañía que estarán
-    representadas en la clase CompanyModel (companyModel.py)
+    representadas en la clase EmpleadoModel (EmpleadoModel.py)
     '''
      
     def __init__ (self):
-        self.company = CompanyModel() #Crea un objeto model que se invocará desde esta vista
+        self.company = EmpleadoModel () #Crea un objeto model que se invocará desde esta vista
         #Crea un diccionario con las opciones (key) y los métodos/acciones que se pueden realizar en este objeto (values)
         self.choices = { "1": self.showEmployees,
                          "2": self.showAvgSalary,
