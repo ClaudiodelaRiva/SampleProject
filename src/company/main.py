@@ -1,0 +1,18 @@
+
+from src.company.companyView import CompanyView
+from src.util.database import DataBase
+
+'''
+    Inicialización de la aplicación: 
+    Crea el esquema de la BBDD, realiza una carga inicial de datos en la BD y muestra un menú
+''' 
+
+DBNAME="CompanyDB.db"
+SCHEMA = "resources/schema.sql"
+DATA = "resources/data.sql"
+
+db = DataBase(DBNAME) #Conexión a la base de datos DBNAME, si no existe la crea
+db.executeScript(SCHEMA) #Genera el esquema ejecutando el script SCHEMA
+db.executeScript(DATA) #Carga incial de datos especificada en el script DATA
+
+CompanyView().run() #Muestra menú para ejecutar la aplicación
