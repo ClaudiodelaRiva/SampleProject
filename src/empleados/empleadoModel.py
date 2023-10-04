@@ -3,7 +3,7 @@ from src.util.database import DataBase
 class EmpleadoModel:
     '''
     Clase que representa los objetos de negocio (model) relativos a las funcionalidades de 
-    la compañia. Varios métodos de esta clase se invocarán desde la vista, y los resultados
+    los empleados. Varios métodos de esta clase se invocarán desde la vista (EmpleadoView), y los resultados
     se devolverán nuevamente a la vista para su visualización
     '''
     

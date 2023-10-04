@@ -5,7 +5,7 @@ from src.empleados.empleadoModel import EmpleadoModel
 class EmpleadoView:
     '''
     Clase que representa la vista (entrada y salida) de datos
-    para las funcionalidades relativas a una compañía que estarán
+    para las funcionalidades relativas a los empleados que estarán
     representadas en la clase EmpleadoModel (EmpleadoModel.py)
     '''
      
