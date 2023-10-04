@@ -39,15 +39,19 @@ class EmpleadoView:
     
     #Vista para la HU Listar los empleados de una compañia
     def showEmployees (self):
-        name = input ("Introducir nombre de compañia: ")
-        #Invoca al objeto model para obtener la lista de empleados       
-        res1 = self.company.getAllEmployees(name)
-        #Imprime los resultados  
-        self.printResults(res1)
-        #Idem para obtener el resumen 
-        res2 = self.company.getSummaryEmployees(name)
-        for d in res2:
-            print (d)
+        nameCompany = input ("Introducir nombre de compañia: ")
+        idCompany = self.company.getIdCompany(nameCompany)
+        if idCompany==None:
+            print ("No existe la compañia", nameCompany)
+        else:
+            #Invoca al objeto model para obtener la lista de empleados
+            res1 = self.company.getAllEmployees(nameCompany)
+            #Imprime los resultados  
+            self.printResults(res1)
+            #Idem para obtener el resumen 
+            res2 = self.company.getSummaryEmployees(nameCompany)
+            for d in res2:
+                print (d)
     
     #Vista para la HU Mostrar salario medio por compañia.
     def showAvgSalary (self):
