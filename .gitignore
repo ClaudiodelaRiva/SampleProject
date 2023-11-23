@@ -15,5 +15,6 @@ venv.bak/
 #binary, database files
 *.database
 *.data
+*.db
 
 .vscode
