@@ -1,4 +1,5 @@
 
+import datetime
 import sys
 from src.empleados.empleadoModel import EmpleadoModel
 
@@ -15,7 +16,8 @@ class EmpleadoView:
         self.choices = { "1": self.showEmployees,
                          "2": self.showAvgSalary,
                          "3": self.newEmployee,
-                         "4": self.quit
+                         "4": self.showEmployeesByYears,
+                         "5": self.quit
                        }
     
     def displayMenu (self):
@@ -23,7 +25,8 @@ class EmpleadoView:
               1.- Lista empleados por compañía \n
               2.- Salario medio por compañia \n
               3.- Insertar empleado \n
-              4.- Salir 
+              4.- Lista empleados por antiguedad (no activos) \n
+              5.- Salir 
               """)
     
     #Muestra la lista de opciones y permite la selección
@@ -71,8 +74,24 @@ class EmpleadoView:
             name=input ("Nombre empleado: ")
             salary=int(input("Salario empleado: "))
             birthDate=input("Fecha nacimiento (aaaa-mm-dd): ")
-            self.empleado.insertEmploye(name,salary,birthDate,idCompany)
-            
+            startDate=input("Fecha alta (aaaa-mm-dd): ")
+            endDate= input ("Fecha baja (aaaa-mm-dd): ")
+            self.empleado.insertEmploye(name,salary,birthDate,startDate, endDate,idCompany)
+
+     #Vista para la HU Listar empleados con antiguedad superior a un año
+    def showEmployeesByYears (self):
+        nameCompany = input ("Introducir nombre de compañia: ")
+        #Invocación al modelo para obtener el id de la compañia
+        idCompany = self.empleado.getIdCompany(nameCompany)
+        if idCompany==None:
+            print ("No existe la compañia",nameCompany)
+        else:
+            #Invoca al objeto model para obtener la lista de empleados
+            fechaActual = datetime.date.today().strftime("%Y-%m-%d")
+            res = self.empleado.getEmployeesByYears(fechaActual,nameCompany)
+            #Imprime los resultados  
+            self.printResults(res)
+   
     def quit(self):
         print("Cerrando opciones.")
         sys.exit(0)

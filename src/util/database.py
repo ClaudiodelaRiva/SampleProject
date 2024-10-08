@@ -27,6 +27,18 @@ class DataBase:
             conn.close()
         except sqlite3.DatabaseError as e:
             raise UnexpectedException(e.args)
+        
+    def executeScriptBatch (self,sqlScript): 
+        # Guarda las sentencias del fichero del esquema en un string para ejecutar posteriormente
+        try:
+            conn = sqlite3.connect(self.dbname)
+            curs = conn.cursor()
+            curs.executescript (sqlScript) #Ejecuta el script
+            conn.commit()
+            curs.close()
+            conn.close()
+        except sqlite3.DatabaseError as e:
+            raise UnexpectedException(e.args)
 
     #Ejecuta una consulta de selección (select)
     #El resultado es una lista de diccionarios y cada diccionario es una fila,

@@ -17,7 +17,20 @@ class EmpleadoModel:
                    where Compania = ? order by Employee.id asc
                 """
         return self.db.executeQuery(query,companyName)
-    
+
+    #Obtiene la lista de empleados para una compañia especificada por su nombre con antiguedad superior a una año (incluyendo a no activos)
+    #fechaActual es la fecha que se quiere indicar para la fecha actual (a efectos de pruebas)
+    def getEmployeesByYears (self,fechaActual,companyName):
+        query = """select Company.name as Compania, Employee.name as NombreEmpleado, 
+	                    case 
+                            when Employee.endDate isnull then trunc((julianday (?) - julianday(Employee.startDate))/365)
+		                    else trunc((julianday(Employee.endDate) - julianday(Employee.startDate))/365) 
+	                    end as Years
+	                from Company inner join Employee on Company.id=Employee.idCompany
+                    where Compania = ? and Years>=1 and  
+                """
+        return self.db.executeQuery(query,fechaActual,companyName)
+
     #Obtiene resumen (total empleados y media de salario) para una compañia especificada por su nombre
     def getSummaryEmployees (self, companyName): 
         query = """select count(Employee.id) as total, avg(Employee.salary) as average
@@ -38,9 +51,9 @@ class EmpleadoModel:
     #Inserción de lo datos de un empleado (name,salary,birthdate) en una compañia
     #Notar que no es necesario indicar explícitamente el valor de la clave del empleado (id),
     #ya que cuando éste es null, sqlite lo genera de forma autoincremental
-    def insertEmploye (self,name,salary,birthDate,idCompany):
+    def insertEmploye (self,name,salary,birthDate,startDate,endDate,idCompany):
         query = """
-                insert into Employee(id,name,salary,birthDate,idCompany) values (null,?,?,?,?) 
+                insert into Employee(id,name,salary,birthDate,startDate,endDate,idCompany) values (null,?,?,?,?) 
                 """
         self.db.executeUpdateQuery(query,name,salary,birthDate,idCompany)
     
@@ -54,7 +67,3 @@ class EmpleadoModel:
             return res[0].get("id")
         else:
             return None
-
-
-    
-    
