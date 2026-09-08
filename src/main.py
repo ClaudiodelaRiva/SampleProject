@@ -1,18 +1,16 @@
-
-from src.empleados.empleadoView import EmpleadoView
-from src.util.database import DataBase
+from src.config import DATA_PATH, DB_PATH, SCHEMA_PATH
+from src.employees.employeeView import EmployeeView
+from src.util.database import Database
 
 '''
     Inicialización de la aplicación: 
     Crea el esquema de la BBDD, realiza una carga inicial de datos en la BD y muestra un menú
+
+    Nota: se recrea el esquema y se recargan los datos en cada ejecución.
 ''' 
 
-DBNAME="CompanyDB.db"
-SCHEMA = "resources/schema.sql"
-DATA = "resources/data.sql"
+db = Database(DB_PATH)
+db.executeScript(SCHEMA_PATH) #Genera el esquema ejecutando el script SCHEMA
+db.executeScript(DATA_PATH) #Carga incial de datos especificada en el script DATA
 
-db = DataBase(DBNAME) #Conexión a la base de datos DBNAME, si no existe la crea
-db.executeScript(SCHEMA) #Genera el esquema ejecutando el script SCHEMA
-db.executeScript(DATA) #Carga incial de datos especificada en el script DATA
-
-EmpleadoView().run() #Muestra menú para ejecutar la aplicación
+EmployeeView().run() #Muestra menú para ejecutar la aplicación
