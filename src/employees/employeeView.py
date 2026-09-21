@@ -1,7 +1,11 @@
 import datetime
+import logging
 import sys
 
 from src.employees.employeeModel import EmployeeModel
+from src.util.unexpectedException import UnexpectedException
+
+logger = logging.getLogger(__name__)
 
 
 class EmployeeView:
@@ -36,10 +40,15 @@ class EmployeeView:
             self.displayMenu()
             choice = input("Introducir opción: ")
             action = self.choices.get(choice)
-            if action:
-                action()
-            else:
+            if not action:
                 print("{0} no es una opción valida".format(choice))
+                continue
+            try:
+                action()
+            except UnexpectedException as e:
+                #Traza el error para diagnóstico y continúa mostrando el menú
+                logger.error("Error inesperado de la aplicación", exc_info=True)
+                print("Error inesperado (detalle en el registro). Inténtelo de nuevo.")
 
     #Vista para la HU Listar los empleados de una compañia
     def showEmployees(self):

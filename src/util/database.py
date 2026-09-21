@@ -1,7 +1,10 @@
+import logging
 import sqlite3
 from contextlib import contextmanager
 
 from src.util.unexpectedException import UnexpectedException
+
+logger = logging.getLogger(__name__)
 
 
 class Database:
@@ -42,6 +45,7 @@ class Database:
                 curs.executescript(sql_script) #Ejecuta el script
                 conn.commit()
         except sqlite3.DatabaseError as e:
+            logger.error("Error ejecutando un script sobre la base de datos %s", self.db_path, exc_info=True)
             raise UnexpectedException(e.args)
 
     #Ejecuta una consulta de selección (select)
@@ -54,6 +58,7 @@ class Database:
                 results = [dict(row) for row in curs.fetchall()]
             return results
         except sqlite3.DatabaseError as e:
+            logger.error("Error ejecutando la consulta en la base de datos %s", self.db_path, exc_info=True)
             raise UnexpectedException(e.args)
 
     #Ejecuta una consulta de actualización (insert, update,...)
@@ -63,4 +68,5 @@ class Database:
                 curs.execute(query, args)
                 conn.commit()
         except sqlite3.DatabaseError as e:
+            logger.error("Error actualizando la base de datos %s", self.db_path, exc_info=True)
             raise UnexpectedException(e.args)
