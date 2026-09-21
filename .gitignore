@@ -17,4 +17,9 @@ venv.bak/
 *.data
 *.db
 
+#build artifacts
+*.egg-info/
+build/
+dist/
+
 .vscode
