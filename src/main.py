@@ -2,7 +2,7 @@ import logging
 
 from src.config import DATA_PATH, DB_PATH, SCHEMA_PATH
 from src.employees.employeeView import EmployeeView
-from src.util.database import Database
+import src.util.database
 
 logger = logging.getLogger(__name__)
 
