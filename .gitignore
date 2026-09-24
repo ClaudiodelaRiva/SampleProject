@@ -23,3 +23,5 @@ build/
 dist/
 
 .vscode
+!.vscode/
+!.vscode/launch.json

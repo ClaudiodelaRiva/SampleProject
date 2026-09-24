@@ -42,6 +42,10 @@ sample-project
 python -m src.main
 ```
 
+En VS Code, abre **Ejecutar y depurar** y selecciona **Ejecutar SampleProject**.
+La configuración usa `src.main` como módulo para que los imports del paquete
+`src` se resuelvan correctamente.
+
 > Nota: en cada arranque se **borra y recrea** el esquema y se recargan los datos
 > iniciales (fíjate en `src/main.py`). El menú se cierra con la opción 5.
 
