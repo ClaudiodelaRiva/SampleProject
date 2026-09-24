@@ -16,7 +16,7 @@ class EmployeeModel:
     def getAllEmployees(self, company_name):
         query = """select Company.name as Compania, Employee.id as IdEmpleado, Employee.name as NombreEmpleado, Employee.salary as Salario 
                    from Company inner join Employee on Company.id=Employee.idCompany
-                   where Compania = ? order by Employee.id asc
+                   where Company.name = ? order by Employee.id asc
                 """
         return self.db.executeQuery(query, company_name)
 

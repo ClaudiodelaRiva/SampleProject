@@ -1,10 +1,13 @@
 import os
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from src.config import SCHEMA_PATH
 from src.employees.employeeModel import EmployeeModel
+from src.employees.employeeView import EmployeeView
 from src.util.database import Database
+from src.util.unexpectedException import UnexpectedException
 
 TEST_DATA = """
     insert into Company(id,id2,name,startDate) values(1,null,'Company 1','2020-05-03');
@@ -79,6 +82,27 @@ class TestEmployee(unittest.TestCase):
         self.assertEqual(self.empleado.getIdCompany('Company 1'), 1)
         self.assertEqual(self.empleado.getIdCompany('Company 2'), 2)
         self.assertIsNone(self.empleado.getIdCompany('No existe'))
+
+    def testForeignKeysAreEnabled(self):
+        with self.assertRaises(UnexpectedException):
+            self.db.executeUpdateQuery(
+                "insert into Employee(name, idCompany) values (?, ?)",
+                'Invalid employee',
+                999,
+            )
+
+    def testViewValidatesSalary(self):
+        view = EmployeeView()
+        with patch("builtins.input", side_effect=["not-a-number", "-1", "1000"]):
+            self.assertEqual(view._read_salary(), 1000)
+
+    def testViewValidatesDates(self):
+        view = EmployeeView()
+        with patch("builtins.input", side_effect=["2024-01-01", "2000-01-01"]):
+            self.assertEqual(
+                view._read_date("Fecha nacimiento (aaaa-mm-dd): ", birth_date=True),
+                "2000-01-01",
+            )
 
 
 if __name__ == '__main__':

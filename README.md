@@ -6,16 +6,16 @@ sobre SQLite, con interfaz de consola.
 ## Estructura
 
 ```
-Documentación y diseño
-├── doc/               Historias de usuario
+SampleProject
+├── doc/               Historias de usuario que se implementan (ejemplo)
 ├── resources/
 │   ├── schema.sql     Esquema de la base de datos (se borra y recrea en cada arranque)
 │   └── data.sql       Carga inicial de datos
 ├── src/               Código fuente
-│   ├── main.py        Punto de entrada y configuración del logging
+│   ├── main.py        Punto de entrada y configuración del logging (mensajes)
 │   ├── config.py      Rutas de la base de datos y scripts SQL
 │   ├── employees/     Capa de empleados (modelo y vista)
-│   └── util/          Helper de acceso a base de datos y excepciones
+│   └── util/          Acceso a datos, validaciones y excepciones
 └── test/              Tests unitarios (unittest / pytest)
 ```
 
@@ -56,6 +56,8 @@ python -m src.main
 ```
 
 Los tests usan una base de datos temporal por cada test; no tocan `CompanyDB.db`.
+Las reglas de validación de entradas están separadas en
+`src/util/validation.py` y se prueban independientemente de la consola.
 
 ## Registro de errores (logging)
 

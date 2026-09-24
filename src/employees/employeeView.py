@@ -4,6 +4,13 @@ import sys
 
 from src.employees.employeeModel import EmployeeModel
 from src.util.unexpectedException import UnexpectedException
+from src.util.validation import (
+    ValidationError,
+    validate_date,
+    validate_date_range,
+    validate_non_empty,
+    validate_salary,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -79,14 +86,42 @@ class EmployeeView:
         if id_company is None:
             print("No existe la compañia", name_company)
         else:
-            #Entrada de datos del empleado
-            #Nota: No se comprueba que esas entradas sean válidas (p.e. que la fecha sea válida y/o esté en el formato indicado)
-            name = input("Nombre empleado: ")
-            salary = int(input("Salario empleado: "))
-            birth_date = input("Fecha nacimiento (aaaa-mm-dd): ")
-            start_date = input("Fecha alta (aaaa-mm-dd): ")
-            end_date = input("Fecha baja (aaaa-mm-dd): ")
+            name = self._read_non_empty("Nombre empleado: ")
+            salary = self._read_salary()
+            birth_date = self._read_date("Fecha nacimiento (aaaa-mm-dd): ", birth_date=True)
+            start_date = self._read_date("Fecha alta (aaaa-mm-dd): ")
+            end_date = self._read_date("Fecha baja (aaaa-mm-dd): ", allow_empty=True)
+            try:
+                validate_date_range(start_date, end_date)
+            except ValidationError as error:
+                logger.warning("%s", error)
+                print(error)
+                return
             self.empleado.insertEmployee(name, salary, birth_date, start_date, end_date, id_company)
+
+    def _read_non_empty(self, prompt):
+        while True:
+            try:
+                return validate_non_empty(input(prompt))
+            except ValidationError as error:
+                logger.warning("%s", error)
+                print(error)
+
+    def _read_salary(self):
+        while True:
+            try:
+                return validate_salary(input("Salario empleado: "))
+            except ValidationError as error:
+                logger.warning("%s", error)
+                print(error)
+
+    def _read_date(self, prompt, allow_empty=False, birth_date=False):
+        while True:
+            try:
+                return validate_date(input(prompt), allow_empty, birth_date)
+            except ValidationError as error:
+                logger.warning("%s", error)
+                print(error)
 
     #Vista para la HU Listar empleados con antiguedad superior a un año
     def showEmployeesByYears(self):

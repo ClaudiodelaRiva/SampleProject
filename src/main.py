@@ -2,7 +2,7 @@ import logging
 
 from src.config import DATA_PATH, DB_PATH, SCHEMA_PATH
 from src.employees.employeeView import EmployeeView
-import src.util.database
+from src.util.database import Database
 
 logger = logging.getLogger(__name__)
 
@@ -16,10 +16,10 @@ def main():
     '''
     logger.info("Inicializando la base de datos %s", DB_PATH)
     db = Database(DB_PATH)
-    db.executeScript(SCHEMA_PATH) #Genera el esquema ejecutando el script SCHEMA
-    db.executeScript(DATA_PATH) #Carga incial de datos especificada en el script DATA
+    db.executeScript(SCHEMA_PATH)
+    db.executeScript(DATA_PATH)
 
-    EmployeeView().run() #Muestra menú para ejecutar la aplicación
+    EmployeeView().run()
 
 
 if __name__ == "__main__":
