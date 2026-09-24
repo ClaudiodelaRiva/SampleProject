@@ -5,6 +5,7 @@
             "name": "Ejecutar SampleProject",
             "type": "debugpy",
             "request": "launch",
+            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
             "module": "src.main",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal"

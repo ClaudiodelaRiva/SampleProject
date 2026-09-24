@@ -32,10 +32,23 @@ python -m venv .venv
 .venv\Scripts\python.exe -m pip install -e ".[dev]"
 ```
 
+En PowerShell, activa el entorno antes de usar el comando instalado:
+
+```powershell
+. .\.venv\Scripts\Activate.ps1
+sample-project
+```
+
+Si no quieres activar el entorno, ejecuta el lanzador con su ruta completa:
+
+```powershell
+.\.venv\Scripts\sample-project.exe
+```
+
 ## Ejecución
 
 ```powershell
-# Con el paquete instalado
+# Con el entorno virtual activado
 sample-project
 
 # Sin instalar, desde la raíz del proyecto
